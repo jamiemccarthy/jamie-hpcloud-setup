@@ -12,7 +12,13 @@ SRC_DIR=$HOME_DIR/src
 DEVSTACK_DIR=$SRC_DIR/devstack
 JHS_DIR=$SRC_DIR/$JHS_PROJECT
 
-git clone -q http://github.com/openstack-dev/devstack.git $DEVSTACK_DIR
+if [ -f $DEVSTACK_DIR/unstack.sh ]; then
+	$DEVSTACK_DIR/unstack.sh
+fi
+if [ ! -d $DEVSTACK_DIR ]; then
+	git clone -q http://github.com/openstack-dev/devstack.git $DEVSTACK_DIR
+fi
+git --git-dir=$DEVSTACK_DIR/.git --work-tree=$DEVSTACK_DIR pull origin master
 cp -a $JHS_DIR/localrc $DEVSTACK_DIR/localrc
 cd $DEVSTACK_DIR
 ./stack.sh > stack.sh.out 2> stack.sh.err
