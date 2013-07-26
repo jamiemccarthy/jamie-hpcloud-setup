@@ -6,9 +6,11 @@
 
 IP=$1
 USER=ubuntu
-SRC_DIR=/home/$USER/src
 THIS_PROJECT=jamie-hpcloud-setup
+
+HOME_DIR=/home/$USER
+SRC_DIR=$HOME_DIR/src
 SETUP_DIR=$SRC_DIR/$THIS_PROJECT
 
-ssh -oStrictHostKeyChecking=no -i ~/.ssh/id_hpcloud $USER@$IP "sudo apt-get update && sudo apt-get install git && mkdir -p $SRC_DIR && git clone https://github.com/jamiemccarthy/$THIS_PROJECT.git $SETUP_DIR && $SETUP_DIR/cloud-setup.sh"
+ssh -oStrictHostKeyChecking=no -i ~/.ssh/id_hpcloud $USER@$IP "touch $HOME_DIR/.bash_history && sudo apt-get -yqq update && sudo apt-get -yqq install git && mkdir -p $SRC_DIR && rm -rf $SETUP_DIR && git clone https://github.com/jamiemccarthy/$THIS_PROJECT.git $SETUP_DIR && $SETUP_DIR/cloud-setup.sh"
 
