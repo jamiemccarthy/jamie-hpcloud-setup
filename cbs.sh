@@ -12,13 +12,7 @@ HOME_DIR=/home/$USER
 SRC_DIR=$HOME_DIR/src
 SETUP_DIR=$SRC_DIR/$THIS_PROJECT
 
-# TODO? PATH=/usr/bin:/bin:/usr/sbin:/sbin ???
-
-# TODO?
-# PVE_DIR=$HOME_DIR/pve
-# sudo apt-get -yqq install python-virtualenv
-# && mkdir -p $PVE_DIR
-# && virtualenv -q --clear $PVE_DIR && source $PVE_DIR/bin/activate && echo 'source $PVE_DIR/bin/activate' >> ~/.bash_profile
+# TODO? PATH=/usr/bin:/bin:/usr/sbin:/sbin
 
 ssh -oStrictHostKeyChecking=no -i ~/.ssh/id_hpcloud $USER@$IP "touch $HOME_DIR/.bash_history && sudo apt-get -yqq update && sudo apt-get -yqq install git && mkdir -p $SRC_DIR && rm -rf $SETUP_DIR && git clone -q https://github.com/jamiemccarthy/$THIS_PROJECT.git $SETUP_DIR && $SETUP_DIR/cloud-setup.sh"
 
