@@ -28,3 +28,19 @@ cp -a $JHS_DIR/localrc $DEVSTACK_DIR/localrc
 cd $DEVSTACK_DIR
 ./stack.sh > stack.sh.out 2> stack.sh.err
 
+sudo apt-get -yqq install python-virtualenv libsqlite3-dev # TODO? uwsgi-core uwsgi-plugin-python
+cd $SRC_DIR
+git clone https://github.com/stackforge/barbican.git
+cd barbican
+virtualenv .venv
+source .venv/bin/activate
+pip install -r tools/pip-requires
+pip install -r tools/test-requires
+cp -a etc/barbican/barbican-api.conf ~/ # TODO review how barbiban-all does this if the file is missing
+less ~/barbican-api.conf 
+sudo mkdir /var/lib/barbican ; sudo chown ubuntu:ubuntu /var/lib/barbican
+sudo mkdir /var/log/barbican ; sudo chown ubuntu:ubuntu /var/log/barbican
+sudo mkdir /etc/barbican     ; sudo chown ubuntu:ubuntu /etc/barbican
+cp etc/barbican/barbican-{api,admin}-paste.ini /etc/barbican/
+bin/barbican-all
+
