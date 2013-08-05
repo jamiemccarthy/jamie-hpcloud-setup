@@ -28,12 +28,14 @@ cp -a $JHS_DIR/localrc $DEVSTACK_DIR/localrc
 cd $DEVSTACK_DIR
 ./stack.sh > stack.sh.out 2> stack.sh.err
 
-sudo apt-get -yqq install python-virtualenv libsqlite3-dev uwsgi-core uwsgi-plugin-python
+sudo apt-get -yqq install python-virtualenv libsqlite3-dev
 cd $SRC_DIR
 git clone https://github.com/stackforge/barbican.git
 cd barbican
 virtualenv .venv
 source .venv/bin/activate
+pip install uwsgi
+pip install PasteDeploy
 pip install -r tools/pip-requires
 pip install -r tools/test-requires
 cp -a etc/barbican/barbican-api.conf ~/ # TODO review how barbiban-all does this if the file is missing
