@@ -31,15 +31,17 @@ cd $DEVSTACK_DIR
 
 # Install barbican, per <https://github.com/cloudkeep/barbican/wiki/Developer-Guide>
 
-sudo apt-get -yqq install python-virtualenv libsqlite3-dev libpq-dev
+sudo apt-get -yqq install virtualenv python-virtualenv python-pip python-dev libsqlite3-dev libpq-dev
 cd $SRC_DIR
 git clone https://github.com/stackforge/barbican.git
 cd barbican
 virtualenv .venv
 source .venv/bin/activate
+export VENV_HOME=$SRC_DIR/barbican
 pip install uwsgi                  || exit 1
 pip install -r tools/pip-requires  || exit 1
 pip install -r tools/test-requires || exit 1
+pip install -e .                   || exit 1
 cp -a etc/barbican/barbican-api.conf ~/
 sudo mkdir /var/lib/barbican ; sudo chown ubuntu:ubuntu /var/lib/barbican
 sudo mkdir /var/log/barbican ; sudo chown ubuntu:ubuntu /var/log/barbican
