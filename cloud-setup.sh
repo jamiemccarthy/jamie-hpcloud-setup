@@ -38,6 +38,7 @@ cd barbican
 virtualenv .venv
 source .venv/bin/activate
 pip install uwsgi
+exit 0 # test proceeding from this point
 pip install -r tools/pip-requires
 pip install -r tools/test-requires
 cp -a etc/barbican/barbican-api.conf ~/
