@@ -31,7 +31,7 @@ cd $DEVSTACK_DIR
 
 # Install barbican, per <https://github.com/cloudkeep/barbican/wiki/Developer-Guide>
 
-sudo apt-get -yqq install virtualenv python-virtualenv python-pip python-dev libsqlite3-dev libpq-dev
+sudo apt-get -yqq install python-virtualenv python-pip python-dev libsqlite3-dev libpq-dev
 cd $SRC_DIR
 git clone https://github.com/stackforge/barbican.git
 cd barbican
