@@ -62,5 +62,6 @@ sudo updatedb
 
 # Start Barbican
 
+cd $BARBICAN_DIR
 bin/barbican-all > ~/barbican-all.out 2> ~/barbican-all.err &
 
