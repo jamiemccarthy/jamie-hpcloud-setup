@@ -10,6 +10,7 @@ JAMIE_SETUP_PROJECT=jamie-hpcloud-setup
 HOME_DIR=/home/$USER
 SRC_DIR=$HOME_DIR/src
 DEVSTACK_DIR=$SRC_DIR/devstack
+BARBICAN_DIR=$SRC_DIR/barbican
 JAMIE_SETUP_DIR=$SRC_DIR/$JAMIE_SETUP_PROJECT
 
 # Try to undo installation before redo. May or may not work.
@@ -34,7 +35,7 @@ cd $DEVSTACK_DIR
 sudo apt-get -yqq install python-virtualenv python-pip python-dev libsqlite3-dev libpq-dev
 cd $SRC_DIR
 git clone https://github.com/stackforge/barbican.git
-cd barbican
+cd $BARBICAN_DIR
 virtualenv .venv
 source .venv/bin/activate
 export VENV_HOME=$SRC_DIR/barbican
@@ -49,4 +50,17 @@ sudo mkdir /etc/barbican     ; sudo chown ubuntu:ubuntu /etc/barbican
 cp etc/barbican/barbican-{api,admin}-paste.ini /etc/barbican/
 sudo updatedb # I find "locate" useful
 bin/barbican-all
+
+# Shut down devstack, except for Keystone, per
+# <https://github.com/cloudkeep/barbican/wiki/Developer-Guide#running-openstack-keystone-authentication-middleware>
+
+cd $DEVSTACK_DIR
+./unstack.sh
+/opt/stack/keystone/bin/keystone-all --verbose --debug > ~/keystone.out 2> ~/keystone.err &
+sleep 10
+# Replace the sample password with the "1" password from our localrc. This
+# creates a "barbican" user and assigns it the "admin" role.
+perl -i~ -pe 's/orange/1/' $BARBICAN_DIR/bin/keystone_data.sh
+# Patch barbican-api-paste.ini to use Keystone
+patch /etc/barbican/barbican-api-paste.ini < $JAMIE_SETUP_DIR/barbican-api-paste.ini.patch || exit 1
 

@@ -1,0 +1,26 @@
+--- /etc/barbican/barbican-api-paste.ini~	2013-08-07 00:01:22.233794376 +0000
++++ /etc/barbican/barbican-api-paste.ini	2013-08-07 17:46:11.553794376 +0000
+@@ -1,6 +1,9 @@
+-# Use this pipeline for Barbican API - DEFAULT no authentication
+ [pipeline:main]
+-pipeline = unauthenticated-context apiapp
++pipeline = keystone_authtoken context apiapp
++
++# Use this pipeline for Barbican API - DEFAULT no authentication
++#[pipeline:main]
++#pipeline = unauthenticated-context apiapp
+ ####pipeline = simple apiapp
+ 
+ #Use this pipeline to activate a repoze.profile middleware and HTTP port,
+@@ -9,8 +12,8 @@
+ pipeline = unauthenticated-context egg:Paste#cgitb egg:Paste#httpexceptions profile apiapp
+ 
+ #Use this pipeline for keystone auth
+-[pipeline:barbican-api-keystone]
+-pipeline = keystone_authtoken context apiapp
++#[pipeline:barbican-api-keystone]
++#pipeline = keystone_authtoken context apiapp
+ 
+ [app:apiapp]
+ paste.app_factory = barbican.api.app:create_main_app
+
