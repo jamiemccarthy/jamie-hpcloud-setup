@@ -13,12 +13,6 @@ DEVSTACK_DIR=$SRC_DIR/devstack
 BARBICAN_DIR=$SRC_DIR/barbican
 JAMIE_SETUP_DIR=$SRC_DIR/$JAMIE_SETUP_PROJECT
 
-# Try to undo installation before redo. May or may not work.
-
-if [ -f $DEVSTACK_DIR/unstack.sh ]; then
-	$DEVSTACK_DIR/unstack.sh
-fi
-
 # Install devstack
 
 if [ ! -d $DEVSTACK_DIR ]; then
@@ -48,8 +42,6 @@ sudo mkdir /var/lib/barbican ; sudo chown ubuntu:ubuntu /var/lib/barbican
 sudo mkdir /var/log/barbican ; sudo chown ubuntu:ubuntu /var/log/barbican
 sudo mkdir /etc/barbican     ; sudo chown ubuntu:ubuntu /etc/barbican
 cp etc/barbican/barbican-{api,admin}-paste.ini /etc/barbican/
-sudo updatedb # I find "locate" useful
-bin/barbican-all
 
 # Shut down devstack, except for Keystone, per
 # <https://github.com/cloudkeep/barbican/wiki/Developer-Guide#running-openstack-keystone-authentication-middleware>
@@ -63,4 +55,12 @@ sleep 10
 perl -i~ -pe 's/orange/1/' $BARBICAN_DIR/bin/keystone_data.sh
 # Patch barbican-api-paste.ini to use Keystone
 patch /etc/barbican/barbican-api-paste.ini < $JAMIE_SETUP_DIR/barbican-api-paste.ini.patch || exit 1
+
+# I find "locate" useful
+
+sudo updatedb
+
+# Start Barbican
+
+bin/barbican-all > ~/barbican-all.out 2> ~/barbican-all.err &
 
