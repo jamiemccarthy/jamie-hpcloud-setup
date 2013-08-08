@@ -24,6 +24,11 @@ cp -a $JAMIE_SETUP_DIR/localrc $DEVSTACK_DIR/localrc
 cd $DEVSTACK_DIR
 ./stack.sh > stack.sh.out 2> stack.sh.err
 
+# Reconfigure Keystone to use UUIDs instead of PKI tokens -- less secure,
+# but easier to manipulate when testing.
+
+patch /etc/keystone/keystone.conf < $JAMIE_SETUP_DIR/patches/keyconf.conf || exit 1
+
 # Shut down devstack, then restart just Keystone, per
 # <https://github.com/cloudkeep/barbican/wiki/Developer-Guide#running-openstack-keystone-authentication-middleware>
 
@@ -52,7 +57,7 @@ cp etc/barbican/barbican-{api,admin}-paste.ini /etc/barbican/
 
 # Patch barbican-api-paste.ini to use Keystone
 
-patch /etc/barbican/barbican-api-paste.ini < $JAMIE_SETUP_DIR/barbican-api-paste.ini.patch || exit 1
+patch /etc/barbican/barbican-api-paste.ini < $JAMIE_SETUP_DIR/patches/barbican-api-paste.ini || exit 1
 
 # Start Barbican
 
