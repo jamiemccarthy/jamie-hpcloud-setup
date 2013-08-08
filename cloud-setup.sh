@@ -27,7 +27,7 @@ cd $DEVSTACK_DIR
 # Reconfigure Keystone to use UUIDs instead of PKI tokens -- less secure,
 # but easier to manipulate when testing.
 
-patch /etc/keystone/keystone.conf < $JAMIE_SETUP_DIR/patches/keyconf.conf || exit 1
+patch /etc/keystone/keystone.conf < $JAMIE_SETUP_DIR/patches/keystone.conf || exit 1
 
 # Shut down devstack, then restart just Keystone, per
 # <https://github.com/cloudkeep/barbican/wiki/Developer-Guide#running-openstack-keystone-authentication-middleware>
