@@ -51,7 +51,7 @@ sudo pip install python-keystoneclient python-novaclient python-swiftclient
 # Configure salt master
 #
 
-perl -pe 's/^(#master: salt)$/$1\nmaster: '$SALTMASTER_IP'/' /etc/salt/minion
+perl -i -pe 's/^(#master: salt)$/$1\nmaster: '$SALTMASTER_IP'/' /etc/salt/minion
 
 #
 # Just because I find "locate" useful

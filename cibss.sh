@@ -50,7 +50,7 @@ FLAVOR=$FLAVOR_LARGE
 # Delete and create the instance.
 #
 
-echo "creating $MACHINE_NAME..."
+echo "creating $MACHINE_NAME in $AZ_NAME..."
 
 nova --insecure delete $MACHINE_NAME 2> /dev/null
 
@@ -109,4 +109,6 @@ done
 #
 
 ssh -oStrictHostKeyChecking=no -i $MY_SSH_KEY $USER@$PUBLIC_IP "sudo apt-get -yqq install git && mkdir -p $SRC_DIR && rm -rf $SETUP_DIR && git clone -q https://github.com/jamiemccarthy/$THIS_PROJECT.git $SETUP_DIR && $SETUP_DIR/lbaas-saltmaster-setup.sh $PUBLIC_IP"
+
+echo "$MACHINE_NAME has public ip $PUBLIC_IP"
 
