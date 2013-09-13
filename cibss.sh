@@ -105,7 +105,8 @@ done
 
 #
 # Install git, clone this repository, and run the script that sets up the saltmaster.
+# TODO: Assign a floating IP, and pass it in instead of the public IP
 #
 
-ssh -oStrictHostKeyChecking=no -i $MY_SSH_KEY $USER@$PUBLIC_IP "sudo apt-get -yqq install git && mkdir -p $SRC_DIR && rm -rf $SETUP_DIR && git clone -q https://github.com/jamiemccarthy/$THIS_PROJECT.git $SETUP_DIR && $SETUP_DIR/lbaas-saltmaster-setup.sh"
+ssh -oStrictHostKeyChecking=no -i $MY_SSH_KEY $USER@$PUBLIC_IP "sudo apt-get -yqq install git && mkdir -p $SRC_DIR && rm -rf $SETUP_DIR && git clone -q https://github.com/jamiemccarthy/$THIS_PROJECT.git $SETUP_DIR && $SETUP_DIR/lbaas-saltmaster-setup.sh $PUBLIC_IP"
 

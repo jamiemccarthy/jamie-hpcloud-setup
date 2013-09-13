@@ -5,6 +5,8 @@
 # Make the modifications to a freshly-booted instance, to turn it into
 # a salt master.
 
+SALTMASTER_IP=$1
+
 USER=ubuntu
 JAMIE_SETUP_PROJECT=jamie-hpcloud-setup
 
@@ -49,8 +51,7 @@ sudo pip install python-keystoneclient python-novaclient python-swiftclient
 # Configure salt master
 #
 
-# TODO This should really be a floating IP we assign and pass into this script.
-perl -pe 's/^(#master: salt)$/$1\nmaster: '$PUBLIC_IP'/' /etc/salt/minion
+perl -pe 's/^(#master: salt)$/$1\nmaster: '$SALTMASTER_IP'/' /etc/salt/minion
 
 #
 # Just because I find "locate" useful
