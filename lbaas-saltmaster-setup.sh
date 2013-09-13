@@ -45,17 +45,16 @@ sudo pip install python-keystoneclient python-novaclient python-swiftclient
 
 # sudo apt-get install autoconf automake autotools-dev daemon fabric ntp
 
+#
+# Configure salt master
+#
 
+# TODO This should really be a floating IP we assign and pass into this script.
+perl -pe 's/^(#master: salt)$/$1\nmaster: '$PUBLIC_IP'/' /etc/salt/minion
 
 #
 # Just because I find "locate" useful
 #
 
 sudo updatedb
-
-#
-# From pcrews's deploy_libra_env.py, prior to making an image
-#
-
-sudo sync
 

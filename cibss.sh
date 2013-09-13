@@ -44,7 +44,7 @@ echo "AZ_NAME = $AZ_NAME"
 FLAVOR_SMALL=2002
 FLAVOR_MEDIUM=2003
 FLAVOR_LARGE=2004
-FLAVOR=$FLAVOR_MEDIUM
+FLAVOR=$FLAVOR_LARGE
 
 #
 # Delete and create the instance.
@@ -104,16 +104,8 @@ while [ "x$STATUS" != 'xACTIVE' ] ; do
 done
 
 #
-# Install git, clone this repository, and run the script that sets up the template.
+# Install git, clone this repository, and run the script that sets up the saltmaster.
 #
 
-ssh -oStrictHostKeyChecking=no -i $MY_SSH_KEY $USER@$PUBLIC_IP "sudo apt-get -yqq install git && mkdir -p $SRC_DIR && rm -rf $SETUP_DIR && git clone -q https://github.com/jamiemccarthy/$THIS_PROJECT.git $SETUP_DIR && $SETUP_DIR/lbaas-template-setup.sh"
-
-#
-# Make an image of the resulting server.
-#
-
-sleep 5
-IMAGE_NAME=lbaas-prod-template-`TZ=UTC date "+%Y-%m-%d_%H-%M"`
-echo "nova --insecure --image-create $ID $IMAGE_NAME"
+ssh -oStrictHostKeyChecking=no -i $MY_SSH_KEY $USER@$PUBLIC_IP "sudo apt-get -yqq install git && mkdir -p $SRC_DIR && rm -rf $SETUP_DIR && git clone -q https://github.com/jamiemccarthy/$THIS_PROJECT.git $SETUP_DIR && $SETUP_DIR/lbaas-saltmaster-setup.sh"
 

@@ -22,6 +22,7 @@ HOME_DIR=/home/$USER
 SRC_DIR=$HOME_DIR/src
 SETUP_DIR=$SRC_DIR/$THIS_PROJECT
 MY_SSH_KEY=/Users/jamie/.ssh/id_hpcloud
+MY_KEY_NAME=jamie-hpcloud
 
 IMAGE_UBUNTU_PRECISE='9bf86304-b16f-48bd-9bbd-c18d96d76f1c'
 IMAGE_UBUNTU_RARING='312de666-45f0-4cc7-b3c9-de02bc328afb'
@@ -40,7 +41,6 @@ AZ_NAME="dbaas-aw2az$2-v1"
 
 echo "BYPASS_URL = $BYPASS_URL"
 echo "AZ_NAME = $AZ_NAME"
-exit 0
 
 FLAVOR_SMALL=2002
 FLAVOR_MEDIUM=2003
@@ -55,7 +55,7 @@ echo "creating $MACHINE_NAME..."
 
 nova --insecure delete $MACHINE_NAME 2> /dev/null
 
-nova --insecure boot --flavor=$FLAVOR --image=$IMAGE --key-name=jamie-hpcloud --security-groups=default $MACHINE_NAME
+nova --insecure boot --flavor=$FLAVOR --image=$IMAGE --availability-zone=$AZ_NAME --key-name=$MY_KEY_NAME --security-groups=default $MACHINE_NAME
 
 #
 # Wait for its status to change from BUILD to ACTIVE, and get its ID and IPs,
@@ -116,5 +116,5 @@ ssh -oStrictHostKeyChecking=no -i $MY_SSH_KEY $USER@$PUBLIC_IP "sudo apt-get -yq
 
 sleep 5
 IMAGE_NAME=lbaas-prod-template-`TZ=UTC date "+%Y-%m-%d_%H-%M"`
-echo "nova --insecure --image-create $ID $IMAGE_NAME"
+nova --insecure --image-create $ID $IMAGE_NAME
 
