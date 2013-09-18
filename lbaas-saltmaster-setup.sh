@@ -51,7 +51,8 @@ sudo pip install python-keystoneclient python-novaclient python-swiftclient
 # Configure salt master
 #
 
-perl -i -pe 's/^(#master: salt)$/$1\nmaster: '$SALTMASTER_IP'/' /etc/salt/minion
+perl -i -pe 's{^(#master: salt)$}{$1\nmaster: '$SALTMASTER_IP'}' /etc/salt/minion
+perl -i -pe 's{^(# The hash_type is the hash to use)}{file_roots:\n  base:\n    - /srv/salt\n  dev:\n    - /srv/salt/dev\n  prod:\n    - /srv/salt/prod\n  stage:\n    - /srv/lbaas-staging-salt\n  exp:\n    - /srv/salt/exp\n\n$1}; s{^(#pillar_opts: True)}{$1\n\npillar_roots:\n  base:\n    - /srv/pillar\n  stage:\n    - /srv/lbaas-staging-pillar\n  dev:\n    - /srv/pillar/dev\n  exp:\n    - /srv/pillar/exp\n};' /etc/salt/master
 
 #
 # Just because I find "locate" useful
