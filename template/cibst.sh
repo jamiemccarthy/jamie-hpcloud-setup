@@ -108,7 +108,7 @@ done
 # Install git, clone this repository, and run the script that sets up the template.
 #
 
-ssh -oStrictHostKeyChecking=no -i $MY_SSH_KEY $USER@$PUBLIC_IP "sudo apt-get -yqq install git && mkdir -p $SRC_DIR && rm -rf $SETUP_DIR && git clone -q https://github.com/jamiemccarthy/$THIS_PROJECT.git $SETUP_DIR && $SETUP_DIR/lbaas-template-setup.sh"
+ssh -oStrictHostKeyChecking=no -i $MY_SSH_KEY $USER@$PUBLIC_IP "sudo apt-get -yqq install git && mkdir -p $SRC_DIR && rm -rf $SETUP_DIR && git clone -q https://github.com/jamiemccarthy/$THIS_PROJECT.git $SETUP_DIR && $SETUP_DIR/template/lbaas-template-setup.sh"
 
 #
 # Make an image of the resulting server.
