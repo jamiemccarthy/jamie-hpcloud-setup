@@ -110,9 +110,10 @@ done
 # TODO: Assign a floating IP, and pass it in instead of the public IP
 #
 
-ssh -oStrictHostKeyChecking=no -i $MY_SSH_KEY $USER@$PUBLIC_IP "sudo apt-get -yqq install git && mkdir -p $SRC_DIR && rm -rf $SETUP_DIR && git clone -q https://github.com/jamiemccarthy/$THIS_PROJECT.git $SETUP_DIR && $SETUP_DIR/lbaas-magic/lbaas-magic-setup.sh"
+#ssh -oStrictHostKeyChecking=no -i $MY_SSH_KEY $USER@$PUBLIC_IP "sudo apt-get -yqq install git && mkdir -p $SRC_DIR && rm -rf $SETUP_DIR && git clone -q https://github.com/jamiemccarthy/$THIS_PROJECT.git $SETUP_DIR && $SETUP_DIR/lbaas-magic/lbaas-magic-setup.sh"
+ssh -oStrictHostKeyChecking=no -i $MY_SSH_KEY $USER@$PUBLIC_IP "sudo apt-get -yqq install git && mkdir -p $SRC_DIR && rm -rf $SETUP_DIR && git clone -q https://github.com/jamiemccarthy/$THIS_PROJECT.git $SETUP_DIR"
 
-echo "lbaas-magic is set up on $MACHINE_NAME."
-echo "Connect to it with `ssh -i $MY_SSH_KEY ubuntu@$PUBLIC_IP`."
-echo "Run lbaas-magic with `cd $SRC_DIR/lbaas-magic ; python saltmagic.py --verbose`."
+echo "lbaas-magic is set up on $MACHINE_NAME"
+echo "Connect to it with: ssh -i $MY_SSH_KEY $USER@$PUBLIC_IP"
+echo "Run lbaas-magic with: cd $SRC_DIR/lbaas-magic ; python saltmagic.py --verbose"
 

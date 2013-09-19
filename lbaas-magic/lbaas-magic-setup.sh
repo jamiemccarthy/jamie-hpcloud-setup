@@ -42,6 +42,11 @@ chmod 644 $HOME_DIR/.ssh
 ssh-keygen -f $HOME_DIR/.ssh/id_rsa -C 'auto-generated-lbaas-magic' -N ''
 
 #
+# TODO Patch lbaas-magic's example .cfg, taking the nova auth from
+# current env vars.
+#
+
+#
 # Just because I find "locate" useful
 #
 
