@@ -4,6 +4,8 @@
 #
 # Make a new HP Cloud server, update it, and install lbaas-magic.
 #
+# Doesn't run lbaas-magic, but does set up keys for it to use.
+#
 # First argument is the target machine name, e.g. "lbaas-prod-saltmagic-1",
 # second is the number (1-3) of the target AZ, e.g. "1"
 
@@ -108,7 +110,9 @@ done
 # TODO: Assign a floating IP, and pass it in instead of the public IP
 #
 
-ssh -oStrictHostKeyChecking=no -i $MY_SSH_KEY $USER@$PUBLIC_IP "sudo apt-get -yqq install git && mkdir -p $SRC_DIR && rm -rf $SETUP_DIR && git clone -q https://github.com/jamiemccarthy/$THIS_PROJECT.git $SETUP_DIR && $SETUP_DIR/lbaas-magic/lbaas-magic-setup.sh $PUBLIC_IP"
+ssh -oStrictHostKeyChecking=no -i $MY_SSH_KEY $USER@$PUBLIC_IP "sudo apt-get -yqq install git && mkdir -p $SRC_DIR && rm -rf $SETUP_DIR && git clone -q https://github.com/jamiemccarthy/$THIS_PROJECT.git $SETUP_DIR && $SETUP_DIR/lbaas-magic/lbaas-magic-setup.sh"
 
-echo "$MACHINE_NAME has public ip $PUBLIC_IP"
+echo "lbaas-magic is set up on $MACHINE_NAME."
+echo "Connect to it with `ssh -i $MY_SSH_KEY ubuntu@$PUBLIC_IP`."
+echo "Run lbaas-magic with `cd $SRC_DIR/lbaas-magic ; python saltmagic.py --verbose`."
 
