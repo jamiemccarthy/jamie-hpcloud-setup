@@ -38,7 +38,7 @@ git clone -q https://github.com/jamiemccarthy/$LBAAS_MAGIC_PROJECT.git $LBAAS_MA
 #
 
 mkdir -p $HOME_DIR/.ssh
-chmod 644 $HOME_DIR/.ssh
+chmod 755 $HOME_DIR/.ssh
 ssh-keygen -f $HOME_DIR/.ssh/id_rsa -C 'auto-generated-lbaas-magic' -N ''
 
 #
